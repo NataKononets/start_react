@@ -1,27 +1,32 @@
 import React, { Component } from 'react';
+import logo from '../assets/img/netflix-logo-png-25621.png';
+import avatar from '../assets/img/Ellipse2.png'; 
 
-class Header extends Component {
-    render() {
-        return (
-        <header>
-        <div className="header-left">
-          <img className="logo" src="img/netflix-logo-png-2562 1.png" alt="Netflix"/>
-          <div className="separator"></div>
-          <span className="date-text">Friday July 8th</span>
-        </div>
+export default function Header() {
+  return (
+    <header className="header container d-flex align-items-center justify-content-between">
 
-        <div className="header-right">
-          <form className="search" action="#" method="get">
-            <input className="search-input" type="text" name="q" placeholder="Search..."/>
-            <button className="search-button" type="submit" aria-label="Search">
-              <i className="fas fa-search"></i>
-            </button>
-          </form>
-          <img className="avatar" src="img/Ellipse 2.png" alt="User avatar"/>
-        </div>
+      <div className="d-flex align-items-center">
+        <img src={logo} className="logo" alt="Netflix" />
+        <div className="separator" aria-hidden="true"></div>
+        <span className="date-text">Friday July 8th</span>
+      </div>
+      <div className="d-flex align-items-center">
+        <form className="search d-flex align-items-center" action="#" role="search">
+          <input
+            className="search-input"
+            type="text"
+            placeholder="Search..."
+            aria-label="Search"
+          />
+          <button className="search-button" type="submit" aria-label="Search">
+            <i className="bi bi-search"></i>
+          </button>
+        </form>
+
+        <img src={avatar} className="avatar ms-3" alt="User avatar" />
+      </div>
+
     </header>
-        );
-    }
+  );
 }
-
-export default Header;

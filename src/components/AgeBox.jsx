@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-class AgrBox extends Component {
+class AgeBox extends Component {
     render() {
         return (
-    <div className="age-box">
-          <div className="bar"></div>
-          <div className="age-text">16+</div>
-        </div>
+     <div className="age-box position-absolute d-flex align-items-center">
+      <div className="bar"></div>
+      <div className="age-text ms-3">16+</div>
+            </div>
         );
     }
 }
 
-export default AgrBox;
+export default AgeBox;
