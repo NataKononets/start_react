@@ -1,37 +1,42 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Description extends Component {
-    render() {
-           return (
-             <section className="description">
-      
-        <p className="description-text mb-4">
-          In a 1980s Indiana town, a group of friends witness supernatural forces and secret
-          government exploits. As they search for answers, the children unravel a series
-          of extraordinary mysteries.
-        </p>
+  renderStar(i) {
+    const { rating, onRate } = this.props;
+    const filled = i <= rating;
+    const cls = filled ? "fas fa-star" : "far fa-star";
+    return (
+      <i
+        key={i}
+        className={cls}
+        role="button"
+        onClick={() => onRate?.(i)}
+        aria-label={`Rate ${i}`}
+        title={`Rate ${i}`}
+      />
+    );
+  }
 
-        <div className="rating d-flex align-items-center mb-4" aria-label="rating 3 of 5">
-          <i className="fas fa-star"></i>
-          <i className="fas fa-star"></i>
-          <i className="fas fa-star"></i>
-          <i className="far fa-star"></i>
-          <i className="far fa-star"></i>
+  render() {
+    const { text, rating, onStreamNow } = this.props;
+    return (
+      <section className="description">
+        <p className="description-text mb-4">{text}</p>
+
+        <div className="rating d-flex align-items-center mb-4" aria-label={`rating ${rating} of 5`}>
+          {[1, 2, 3, 4, 5].map((i) => this.renderStar(i))}
         </div>
 
         <div className="buttons d-flex align-items-center">
-          <button className="stream-now me-3">
-                   <i className="fa-solid fa-play me-2"></i>
-                   STREAM NOW
+          <button className="stream-now me-3" onClick={onStreamNow}>
+            <i className="fa-solid fa-play me-2"></i>
+            STREAM NOW
           </button>
-
-          <button className="all-episodes">
-            ALL EPISODES
-          </button>
+          <button className="all-episodes">ALL EPISODES</button>
         </div>
-
       </section>
     );
   }
 }
+
 export default Description;

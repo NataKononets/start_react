@@ -7,12 +7,12 @@ import p5 from "../assets/img/Rectangle11.jpg";
 
 const posters = [p1, p2, p3, p4, p5];
 
-export default function ImageRow() {
+export default function ImageRow({ posters = [] }) {
   return (
-   <div className="image-row d-flex flex-nowrap mt-3">
-  {posters.map((src, i) => (
-    <img key={i} src={src} alt="" className="poster me-3" />
-  ))}
-</div>
+    <div className="image-row d-flex flex-nowrap mt-3">
+      {posters.map((src, i) => (
+        <img key={i} src={src} alt={`Poster ${i + 1}`} className="poster me-3" />
+      ))}
+    </div>
   );
 }
