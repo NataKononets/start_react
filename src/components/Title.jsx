@@ -1,24 +1,33 @@
 import React, { Component } from "react";
 
 class Title extends Component {
+  static defaultProps = {
+    onGenreClick: () => {},
+  };
+
   render() {
-    const { genres, title, year, director, seasons, episodes } = this.props;
+    const { genres, title, year, director, seasons, episodes, onGenreClick } = this.props;
+
     return (
       <section className="description">
-        {/* жанры */}
+        {/* ЖАНРЫ */}
         <div className="genres">
           {genres.map((g, i) => (
             <React.Fragment key={g}>
               {i > 0 && <span className="divider" aria-hidden="true"></span>}
-              <span>{g}</span>
+              <span
+                className="genre-item"
+                onClick={() => onGenreClick(g)}
+                style={{ cursor: "pointer" }}
+              >
+                {g}
+              </span>
             </React.Fragment>
           ))}
         </div>
 
-        {/* заголовок */}
         <h1 className="title">{title}</h1>
 
-        {/* инфо-линия */}
         <div className="info">
           <span>{year}</span>
           <div className="divider" />

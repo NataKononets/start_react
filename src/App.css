@@ -221,7 +221,15 @@ body {
   font-size: 20px;
   color: #000;
 }
+.genre-link {
+  color: #fff;
+  font-weight: 500;
+  font-size: 32px;
+}
 
+.genre-link:hover {
+  text-decoration: underline;
+}
 @media (min-width: 1200px) {
   .hero {
     background-position: 68% center;}
