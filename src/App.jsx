@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import "./App.css";
 import Header from "./components/Header.jsx";
 import Title from "./components/Title.jsx";
@@ -29,16 +29,23 @@ const MOVIE = {
 export default function App() {
   const [rating, setRating] = useState(3);
   const [searchText, setSearchText] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+  const handleToggleSearch = () => setShowSearch((prev) => !prev);
 
 
-  const handleSearch     = useCallback((q) => { console.log("search:", q); setSearchText(q.trim()); }, []);
-  const handleStreamNow  = useCallback(() => console.log("STREAM NOW clicked"), []);
-  const handlePrev       = useCallback(() => console.log("Prev"), []);
-  const handleNext       = useCallback(() => console.log("Next"), []);
-  const handleRate       = useCallback((n) => setRating(n), []);
+  const handleSearch = useCallback((q) => { console.log("search:", q); setSearchText(q.trim()); }, []);
+  const handleStreamNow = useCallback(() => console.log("STREAM NOW clicked"), []);
+  const handlePrev = useCallback(() => console.log("Prev"), []);
+  const handleNext = useCallback(() => console.log("Next"), []);
+  const handleRate = useCallback((n) => setRating(n), []);
   const handleGenreClick = useCallback((g) => console.log("genre clicked:", g), []);
-  const handlePosterClick= useCallback((i) => console.log("poster index:", i), []);
-
+  const handlePosterClick = useCallback((i) => console.log("poster index:", i), []);
+  useEffect(() => {
+    if (searchText.trim() === "") return;
+    console.log("Search changed:", searchText);
+  },
+    [searchText]
+  )
   return (
     <section className="hero">
       <div className="container">
@@ -56,18 +63,18 @@ export default function App() {
         )} */}
         {searchText !== "" && (
           <div className="search-result-box mt-4 p-3 border rounded text-white">
-          <p className="m-0">
+            <p className="m-0">
               Search results for:
               <strong>"{searchText}"</strong>
-          </p>
+            </p>
 
-    {searchText.length < 3 ? (
-      <p className="text-warning mt-2">Please enter at least 3 characters...</p>
-    ) : (
-      <p className="text-success mt-2">Showing results...</p>
-    )}
-  </div>
-)}
+            {searchText.length < 3 ? (
+              <p className="text-warning mt-2">Please enter at least 3 characters...</p>
+            ) : (
+              <p className="text-success mt-2">Showing results...</p>
+            )}
+          </div>
+        )}
         <div className="row">
           <div className="col-lg-6">
             <Title
