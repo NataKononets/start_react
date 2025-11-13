@@ -1,58 +1,72 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Header({ date, logo, avatar, onSearch }) {
-
   const [q, setQ] = useState("");
-  const [showSearch, setShowSearch] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const inputRef = useRef(null);
 
-  const toggleSearch = () => setShowSearch(prev => !prev);
+  useEffect(() => {
+    if (isOpen) {
+      inputRef.current?.focus();
+    }
+  }, [isOpen]);
 
   const submit = (e) => {
     e.preventDefault();
-    onSearch?.(q.trim());
+    const value = q.trim();
+    if (!value) return;
+    onSearch?.(value);
   };
 
-  useEffect(() => {
-    if (q.trim() === "") return;
-    console.log("🔎 User typing:", q);
-  }, [q]);
+  const toggleSearch = () => {
+    setIsOpen((prev) => {
+      if (prev) {
+       setQ("");
+      }
+      return !prev;
+    });
+  };
+
+  const onKeyDown = (e) => {
+    if (e.key === "Escape") {
+      setQ("");
+      setIsOpen(false);
+    }
+  };
 
   return (
     <header className="header container d-flex align-items-center justify-content-between pt-5">
-
-      <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center">
         <img src={logo} className="logo" alt="Netflix" />
-        <div className="separator" aria-hidden="true"></div>
+        <div className="separator" aria-hidden="true" />
         <span className="date-text">{date}</span>
       </div>
 
-      <div className="d-flex align-items-center">
-
-        <i
-          className="bi bi-search fs-4 text-white me-3"
-          style={{ cursor: "pointer" }}
-          onClick={toggleSearch}
-        ></i>
-
-        {showSearch && (
-          <form
-            className="search d-flex align-items-center"
-            role="search"
-            onSubmit={submit}
-          >
-            <input
-              className="search-input"
-              type="text"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="Search..."
-              aria-label="Search"
-            />
-            <button className="search-button" type="submit">
-              <i className="bi bi-search"></i>
-            </button>
-          </form>
+      <div className="d-flex align-items-center position-relative">
+        {isOpen && (
+          <div className="search-box">
+            <form onSubmit={submit}>
+              <input
+                ref={inputRef}
+                type="text"
+                className="search-input"
+                placeholder="Search..."
+                value={q}
+                onChange={(e) => setQ(e.target.value)}
+                onKeyDown={onKeyDown}
+              />
+            </form>
+          </div>
         )}
+
+        <button
+          type="button"
+          className="search-toggle-btn ms-3"
+          onClick={toggleSearch}
+          aria-label={isOpen ? "Close search" : "Open search"}
+        >
+          <i className={isOpen ? "bi bi-x-lg" : "bi bi-search"} />
+        </button>
 
         <img src={avatar} className="avatar ms-3" alt="User avatar" />
       </div>
