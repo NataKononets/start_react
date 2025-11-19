@@ -7,7 +7,10 @@ import Description from "./components/Description.jsx";
 import BottomHeader from "./components/BottomHeader.jsx";
 import ImageRow from "./components/ImageRow.jsx";
 import AgeBox from "./components/AgeBox.jsx";
-
+import { Routes, Route} from "react-router-dom"; 
+import About from "./pages/about.jsx";
+import Contact from "./pages/contact.jsx";
+import Price from "./pages/price.jsx";
 import logo from "./assets/img/netflix-logo-png-25621.png";
 import avatar from "./assets/img/Ellipse2.png";
 
@@ -16,6 +19,8 @@ import p2 from "./assets/img/Rectangle7.jpg";
 import p3 from "./assets/img/Rectangle8.png";
 import p4 from "./assets/img/Rectangle9.png";
 import p5 from "./assets/img/Rectangle11.jpg";
+
+
 
 const POSTERS = [p1, p2, p3, p4, p5];
 const GENRES = ["Drama", "Thriller", "Supernatural"];
@@ -60,9 +65,11 @@ export default function App() {
     if (searchText.trim() === "") return;
     console.log("Search changed:", searchText);
   }, [searchText]);
-
   return (
-    <section className="hero">
+    <>
+        <Routes>
+        <Route path="/" element={
+        <section className="hero">
       <div className="container">
         <Header
           date="Friday July 8th"
@@ -118,5 +125,12 @@ export default function App() {
         <AgeBox value="16+" />
       </div>
     </section>
+         } 
+        />  
+        <Route path="/about" element={<About />} />
+        <Route path="/price" element={<Price />} />
+        <Route path="/contact" element={<Contact />} />
+      </Routes>
+    </>
   );
 }

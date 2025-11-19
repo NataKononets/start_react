@@ -61,6 +61,22 @@ body {
   font-size: 20px;
   color: #C8C8C8;
 }
+.header-nav .nav-link {
+  color: #fff;
+  font-size: 18px;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: 0.2s;
+}
+
+.header-nav .nav-link:hover {
+  opacity: 1;
+}
+
+.header-nav .active {
+  font-weight: 700;
+  opacity: 1;
+}
 .search-open {
   background: rgba(0, 0, 0, 0.55);
   border: 1px solid rgba(255, 255, 255, .35);
