@@ -7,20 +7,19 @@ import Description from "./components/Description.jsx";
 import BottomHeader from "./components/BottomHeader.jsx";
 import ImageRow from "./components/ImageRow.jsx";
 import AgeBox from "./components/AgeBox.jsx";
-import { Routes, Route} from "react-router-dom"; 
+
+import { Routes, Route } from "react-router-dom";
 import About from "./pages/about.jsx";
 import Contact from "./pages/contact.jsx";
 import Price from "./pages/price.jsx";
+
 import logo from "./assets/img/netflix-logo-png-25621.png";
 import avatar from "./assets/img/Ellipse2.png";
-
 import p1 from "./assets/img/Rectangle6.png";
 import p2 from "./assets/img/Rectangle7.jpg";
 import p3 from "./assets/img/Rectangle8.png";
 import p4 from "./assets/img/Rectangle9.png";
 import p5 from "./assets/img/Rectangle11.jpg";
-
-
 
 const POSTERS = [p1, p2, p3, p4, p5];
 const GENRES = ["Drama", "Thriller", "Supernatural"];
@@ -38,6 +37,7 @@ const MOVIE = {
 export default function App() {
   const [rating, setRating] = useState(3);
   const [searchText, setSearchText] = useState("");
+  const [popularSwiper, setPopularSwiper] = useState(null); 
 
   const handleSearch = useCallback((q) => {
     const value = q.trim();
@@ -49,13 +49,22 @@ export default function App() {
     () => console.log("STREAM NOW clicked"),
     []
   );
-  const handlePrev = useCallback(() => console.log("Prev"), []);
-  const handleNext = useCallback(() => console.log("Next"), []);
+
+  const handlePrev = useCallback(() => {
+    if (popularSwiper) popularSwiper.slidePrev();
+  }, [popularSwiper]);
+
+  const handleNext = useCallback(() => {
+    if (popularSwiper) popularSwiper.slideNext();
+  }, [popularSwiper]);
+
   const handleRate = useCallback((n) => setRating(n), []);
+
   const handleGenreClick = useCallback(
     (g) => console.log("genre clicked:", g),
     []
   );
+
   const handlePosterClick = useCallback(
     (i) => console.log("poster index:", i),
     []
@@ -65,68 +74,75 @@ export default function App() {
     if (searchText.trim() === "") return;
     console.log("Search changed:", searchText);
   }, [searchText]);
+
   return (
     <>
-        <Routes>
-        <Route path="/" element={
-        <section className="hero">
-      <div className="container">
-        <Header
-          date="Friday July 8th"
-          logo={logo}
-          avatar={avatar}
-          onSearch={handleSearch}
-    
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <section className="hero">
+              <div className="container">
+                <Header
+                  date="Friday July 8th"
+                  logo={logo}
+                  avatar={avatar}
+                  onSearch={handleSearch}
+                />
+
+                {searchText !== "" && (
+                  <div className="search-result-box mt-4 p-3 border rounded text-white">
+                    <p className="m-0">
+                      Search results for: <strong>"{searchText}"</strong>
+                    </p>
+                    {searchText.length < 3 ? (
+                      <p className="text-warning mt-2">
+                        Please enter at least 3 characters...
+                      </p>
+                    ) : (
+                      <p className="text-success mt-2">Showing results...</p>
+                    )}
+                  </div>
+                )}
+
+                <div className="row">
+                  <div className="col-lg-6">
+                    <Title
+                      genres={GENRES}
+                      title={MOVIE.title}
+                      year={MOVIE.year}
+                      director={MOVIE.director}
+                      seasons={MOVIE.seasons}
+                      episodes={MOVIE.episodes}
+                      onGenreClick={handleGenreClick}
+/>
+                    <Description
+                      text={MOVIE.description}
+                      rating={rating}
+                      onRate={handleRate}
+                      onStreamNow={handleStreamNow}
+                    />
+                  </div>
+                </div>
+
+                <BottomHeader
+                  title="POPULAR THIS WEEK"
+                  onPrev={handlePrev}
+                  onNext={handleNext}
+                />
+
+                <ImageRow
+                  posters={POSTERS}
+                  onPosterClick={handlePosterClick}
+                  onSwiperReady={setPopularSwiper}
+                />
+
+                <AgeBox value="16+" />
+              </div>
+            </section>
+          }
         />
 
-        {searchText !== "" && (
-          <div className="search-result-box mt-4 p-3 border rounded text-white">
-            <p className="m-0">
-              Search results for: <strong>"{searchText}"</strong>
-            </p>
-            {searchText.length < 3 ? (
-              <p className="text-warning mt-2">
-                Please enter at least 3 characters...
-              </p>
-            ) : (
-              <p className="text-success mt-2">Showing results...</p>
-            )}
-          </div>
-        )}
-
-        <div className="row">
-          <div className="col-lg-6">
-            <Title
-              genres={GENRES}
-              title={MOVIE.title}
-              year={MOVIE.year}
-              director={MOVIE.director}
-              seasons={MOVIE.seasons}
-              episodes={MOVIE.episodes}
-              onGenreClick={handleGenreClick}
-            />
-
-            <Description
-              text={MOVIE.description}
-              rating={rating}
-              onRate={handleRate}
-              onStreamNow={handleStreamNow}
-            />
-          </div>
-        </div>
-
-        <BottomHeader
-          title="POPULAR THIS WEEK"
-          onPrev={handlePrev}
-          onNext={handleNext}
-        />
-
-        <ImageRow posters={POSTERS} onPosterClick={handlePosterClick} />
-        <AgeBox value="16+" />
-      </div>
-    </section>
-         } 
-        />  
         <Route path="/about" element={<About />} />
         <Route path="/price" element={<Price />} />
         <Route path="/contact" element={<Contact />} />

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faXmark} from "@fortawesome/free-solid-svg-icons";
 
 export default function Header({ date, logo, avatar, onSearch }) {
   const [q, setQ] = useState("");
@@ -73,7 +75,7 @@ export default function Header({ date, logo, avatar, onSearch }) {
         onClick={toggleSearch}
         aria-label={isOpen ? "Close search" : "Open search"}
       >
-        <i className={isOpen ? "bi bi-x-lg" : "bi bi-search"} />
+    <FontAwesomeIcon icon={isOpen ? faXmark: faSearch}/>
       </button>
 
       <img src={avatar} className="avatar ms-3" alt="User avatar" />

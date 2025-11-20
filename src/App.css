@@ -225,7 +225,22 @@ body {
 .rating .far {
   color: #c8c8c8;
 }
+.nav-arrow {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
 
+.nav-arrow i {
+  pointer-events: none;
+}
 .stream-now {
   background: #D40D1F;
   color: #fff;
@@ -247,8 +262,10 @@ body {
 }
 
 .image-row {
-  overflow-x: auto;
-  padding-bottom: 6px;
+  overflow: visible;
+}
+.image-row .swiper-slide {
+  width: 151px !important;
 }
 
 .poster {
@@ -257,6 +274,7 @@ body {
   object-fit: cover;
   border: 1px solid #fff;
   border-radius: 2px;
+  display: block;
 }
 
 .age-box {
